@@ -41,17 +41,14 @@ class Asteroid(CircleShape):
         if self.radius <= ASTEROID_MIN_RADIUS:
             self.kill()            
             return        
-        new_angle = random.uniform(20, 50)
-        v1 = self.velocity.rotate(new_angle)
-        v2 = self.velocity.rotate(-new_angle)
+        angle = random.uniform(20, 50)
+        vec_1, vec_2 = self.velocity.rotate(angle), self.velocity.rotate(-angle)
         new_radius = self.radius - ASTEROID_MIN_RADIUS
-        asteroid1 = Asteroid(self.position.x, self.position.y, new_radius)
-        asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)
-        asteroid1.velocity = v1 * 1.2
-        asteroid2.velocity = v2 * 1.2
+        asteroid_1, asteroid_2 = Asteroid(self.position.x, self.position.y, new_radius), Asteroid(self.position.x, self.position.y, new_radius)
+        asteroid_1.velocity, asteroid_2.velocity = vec_1 * 1.2, vec_2 * 1.2
         log_event("asteroid_split")
         self.kill()
-        return asteroid1, asteroid2
+        return asteroid_1, asteroid_2
     
 
 class AsteroidField(pygame.sprite.Sprite):
@@ -91,7 +88,6 @@ class AsteroidField(pygame.sprite.Sprite):
         if self.spawn_timer > ASTEROID_SPAWN_RATE_SECONDS:
             self.spawn_timer = 0
 
-            # spawn a new asteroid at a random edge
             edge = random.choice(self.edges)
             speed = random.randint(40, 100)
             velocity = edge[0] * speed

@@ -2,14 +2,7 @@ import sys
 import pygame
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state, log_event
-# from player import Player
-# from asteroid import Asteroid
-# from asteroidfield import AsteroidField
-# from shot import Shot
 from game_objects import *
-
-
-
 
 def main():
     print(f"Starting Asteroids!")
